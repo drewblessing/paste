@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title><%= @title || 'Paste' %></title>
+  <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/vendor/highlight.js/highlight.pack.js"></script>
+  <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/vendor/highlight.js/styles/sunburst.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body style="padding-top: 50px;">
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="/">Paste</a>
+        <ul class="nav">
+          <li><a href="/">New</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <%= yield %>
+  </div>
+</body>
+</html>

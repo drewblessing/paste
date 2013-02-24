@@ -1,0 +1,19 @@
+<div class="snippet">
+  <h2><%= @snippet.title %></h2>
+  <div class="navbar toolbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="/delete/<%= @snippet.id %>">Delete</a></li>
+          <li><a href="/no/<%= @snippet.id %>">Toggle Highlighting</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div>
+     <pre><code><%= @snippet.body %></code></pre>
+  </div>
+  <div>
+     Created on <%= @snippet.created_at.strftime("%D at %T %Z") %>
+  </div>
+</div>
