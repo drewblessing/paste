@@ -12,6 +12,9 @@ It currently stores data in Sqlite with future plans to support MySQL.
 
 ## Installation
 
+Install a few packages.  You'll need ruby-devel, make, gcc, gcc-c++, kernel-devel 
+and sqlite-devel or the gem installations below will fail.
+
 Clone this repo:
 `git clone https://github.com/drewblessing/paste.git`
 
