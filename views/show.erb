@@ -1,17 +1,56 @@
+<%
+langs = {
+  'apache'      => 'Apache',
+  'bash'        => 'Bash',
+  'css'         => 'CSS',
+  'diff'        => 'Diff',
+  'http'        => 'HTTP',
+  'ini'         => 'Ini',
+  'java'        => 'Java',
+  'javacript'   => 'Javascript',
+  'json'        => 'JSON',
+  'markdown'    => 'Markdown',
+  'nginx'       => 'Nginx',
+  'objective-c' => 'Objective-C',
+  'perl'        => 'Perl',
+  'php'         => 'PHP',
+  'python'      => 'Python',
+  'ruby'        => 'Ruby',
+  'sql'         => 'SQL',
+  'xml'         => 'XML/HTML',
+}
+%>
 <div class="snippet">
+  <script type="text/javascript">
+    function language(language) {
+      document.getElementById('lang').value = language;
+      document.forms[0].submit();
+    }
+  </script>
   <h2><%= @snippet.title %></h2>
+  <form action="/<%= @snippet.id %>" method="POST">
+    <input type="hidden" name="lang" id="lang" value="" />
+  </form>
   <div class="navbar toolbar">
     <div class="navbar-inner">
       <div class="container">
         <ul class="nav">
           <li><a href="/delete/<%= @snippet.id %>">Delete</a></li>
-          <li><a href="/no/<%= @snippet.id %>">Toggle Highlighting</a></li>
+          <li><a href="#" onClick="language('<%=@lang == "no-highlight" ? "" : "no-highlight" %>')">Toggle Highlighting</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Language<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <% langs.sort.each do |key,value| %>
+                <li><a href="#" onClick="language('<%= key %>')"><%= value %></a></li>
+              <% end %>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
   </div>
   <div>
-     <pre><code><%= @snippet.body %></code></pre>
+     <pre><code class="<%= @lang %>"><%= @snippet.body %></code></pre>
   </div>
   <div>
      Created on <%= @snippet.created_at.strftime("%D at %T %Z") %>

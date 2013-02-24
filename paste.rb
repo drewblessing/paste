@@ -55,17 +55,18 @@ get '/:id' do
   end
 end
 
-# show no syntax
-get '/no/:id' do
+# show w/ specific language
+post '/:id' do
   @snippet = Snippet.get(params[:id])
+  @lang = params[:lang]
   if @snippet
-    erb :show_no_syntax
+    erb :show
   else
     @error = "Sorry. That snippet does not exist."
     erb :new 
   end
 end
- 
+
 # delete
 get '/delete/:id' do
   @snippet = Snippet.get(params[:id])
