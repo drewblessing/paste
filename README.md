@@ -10,6 +10,14 @@ for sensitive information, logs, etc.
 
 It currently stores data in Sqlite with future plans to support MySQL.
 
+## Demo
+
+You can see a demo at [http://paste.drewblessing.com:8080/](http://paste.drewblessing.com:8080/)
+
+NOTE: Date is purged every 10 minutes.  This is not meant to be used as a public service for real
+pastes - it's a demo only.  Also, I do not monitor this service to make sure it's up.  If you 
+find that you cannot access the demo please let me know - @drewblessing on Twitter.
+
 ## Installation
 
 Install a few packages.  You'll need ruby-devel, make, gcc, gcc-c++, kernel-devel 
