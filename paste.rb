@@ -5,6 +5,7 @@ require 'dm-core'
 require 'dm-validations'
 require 'dm-timestamps'
 require 'dm-migrations'
+require 'htmlentities'
 
 DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/paste.sqlite3")
  
@@ -36,8 +37,10 @@ end
 
 # create
 post '/' do
-  @snippet = Snippet.new(:title => params[:snippet_title],
-                         :body  => params[:snippet_body])
+  title = HTMLEntities.new.encode params[:snippet_title]
+  body = HTMLEntities.new.encode params[:snippet_body]
+  @snippet = Snippet.new(:title => title,
+                         :body  => body)
   if @snippet.save
     redirect "/#{@snippet.id}"
   else
