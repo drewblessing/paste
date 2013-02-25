@@ -68,6 +68,9 @@ langs = {
     </div>
   </div>
   <div>
+    Language: <%= langs[@lang] || langs[@snippet.lang] || "Auto detected" %>
+  </div>
+  <div>
      <pre><code class="<%= @lang || @snippet.lang %>"><%= @snippet.body %></code></pre>
   </div>
   <div>
