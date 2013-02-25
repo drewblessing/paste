@@ -47,6 +47,7 @@ langs = {
     <div class="navbar-inner">
       <div class="container">
         <ul class="nav">
+          <li><a href="/raw/<%= @snippet.id %>" target="_blank">Raw</a></li>
           <li><a href="#" onClick="language('<%=@lang == "no-highlight" ? "" : "no-highlight" %>')">Toggle Highlighting</a></li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Language<b class="caret"></b></a>

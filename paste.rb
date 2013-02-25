@@ -56,7 +56,7 @@ get '/:id' do
   end
 end
 
-# show w/ specific language
+# show/save with specific language
 post '/:id' do
   @snippet = Snippet.get(params[:id])
   @lang = params[:lang]
@@ -69,6 +69,17 @@ post '/:id' do
       @success = "Success! The snippet was saved."
     end
     erb :show
+  else
+    @error = "Sorry. That snippet does not exist."
+    erb :new 
+  end
+end
+
+# show raw
+get '/raw/:id' do 
+  @snippet = Snippet.get(params[:id])
+  if @snippet
+    erb :show_raw, :layout => false
   else
     @error = "Sorry. That snippet does not exist."
     erb :new 
