@@ -18,6 +18,7 @@ class Snippet
   property :id,         Serial # primary serial key
   property :title,      String, :required => true, :length => 32
   property :body,       Text,   :required => true
+  property :lang,       String, :length => 12
   property :created_at, DateTime
   property :updated_at, DateTime
 
@@ -59,7 +60,14 @@ end
 post '/:id' do
   @snippet = Snippet.get(params[:id])
   @lang = params[:lang]
+  save = params[:save] == 'true' ? true : false
   if @snippet
+    result = @snippet.update(:lang => params[:lang]) if save
+    if !result && save
+      @error = "Sorry. Could not save the snippet language."
+    elsif save 
+      @success = "Success! The snippet was saved."
+    end
     erb :show
   else
     @error = "Sorry. That snippet does not exist."

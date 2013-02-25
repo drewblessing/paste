@@ -26,16 +26,27 @@ langs = {
       document.getElementById('lang').value = language;
       document.forms[0].submit();
     }
+    function saveLang(language) {
+      document.getElementById('lang').value = language;
+      document.getElementById('save').value = 'true';
+      document.forms[0].submit();
+    }
   </script>
   <h2><%= @snippet.title %></h2>
+  <%if (@snippet.lang.nil? && !@lang.nil?) || (!@lang.nil? && @lang != @snippet.lang) then %>
+    <div class="alert alert-warning">
+      The display language has been changed. If you would like to display the snippet in this language in the future, 
+      click save in the toolbar.
+    </div>
+  <% end %>
   <form action="/<%= @snippet.id %>" method="POST">
     <input type="hidden" name="lang" id="lang" value="" />
+    <input type="hidden" name="save" id="save" value="" />
   </form>
   <div class="navbar toolbar">
     <div class="navbar-inner">
       <div class="container">
         <ul class="nav">
-          <li><a href="/delete/<%= @snippet.id %>">Delete</a></li>
           <li><a href="#" onClick="language('<%=@lang == "no-highlight" ? "" : "no-highlight" %>')">Toggle Highlighting</a></li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Language<b class="caret"></b></a>
@@ -45,12 +56,18 @@ langs = {
               <% end %>
             </ul>
           </li>
+          <%if (@snippet.lang.nil? && !@lang.nil?) || (!@lang.nil? && @lang != @snippet.lang) then %>
+            <li><a href="#" onClick="saveLang('<%= @lang %>')">Save</a></li>
+          <% end %>
+        </ul>
+        <ul class="nav pull-right">
+          <li><a href="/delete/<%= @snippet.id %>">Delete</a></li>
         </ul>
       </div>
     </div>
   </div>
   <div>
-     <pre><code class="<%= @lang %>"><%= @snippet.body %></code></pre>
+     <pre><code class="<%= @lang || @snippet.lang %>"><%= @snippet.body %></code></pre>
   </div>
   <div>
      Created on <%= @snippet.created_at.strftime("%D at %T %Z") %>
