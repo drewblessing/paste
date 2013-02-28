@@ -32,19 +32,24 @@ DataMapper.auto_upgrade!
 
 # new
 get '/' do
-  erb :new
+  erb :edit
 end
 
-# create
+# create/update
 post '/' do
   title = HTMLEntities.new.encode params[:snippet_title]
   body = HTMLEntities.new.encode params[:snippet_body]
-  @snippet = Snippet.new(:title => title,
-                         :body  => body)
-  if @snippet.save
+  if params[:id].nil? || params[:id] == ""
+    @snippet = Snippet.new(:title => title,:body  => body)
+    result = @snippet.save
+  else 
+    @snippet = Snippet.get(params[:id])
+    result = @snippet.update(:title => title, :body => body)
+  end
+  if result
     redirect "/#{@snippet.id}"
   else
-    erb :new
+    erb :edit
   end
 end
 
@@ -55,7 +60,7 @@ get '/:id' do
     erb :show
   else
     @error = "Sorry. That snippet does not exist."
-    erb :new 
+    erb :edit 
   end
 end
 
@@ -74,7 +79,7 @@ post '/:id' do
     erb :show
   else
     @error = "Sorry. That snippet does not exist."
-    erb :new 
+    erb :edit 
   end
 end
 
@@ -85,8 +90,17 @@ get '/raw/:id' do
     erb :show_raw, :layout => false
   else
     @error = "Sorry. That snippet does not exist."
-    erb :new 
+    erb :edit
   end
+end
+
+# edit
+get '/edit/:id' do
+  @snippet = Snippet.get(params[:id])
+  if !@snippet
+    @error = "Sorry. That snippet does not exist."
+  end
+  erb :edit
 end
 
 # delete
@@ -96,11 +110,12 @@ get '/delete/:id' do
     result = @snippet.destroy
     if result
       @success = "Success! Snippet #{@snippet.id} has been deleted."
+      @snippet = nil
     else
       @error = "Sorry.  The snippet could not be deleted." 
     end
   else
     @error = "Sorry. That snippet does not exist."
   end
-  erb :new
+  erb :edit
 end
