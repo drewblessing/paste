@@ -39,13 +39,19 @@ end
 post '/' do
   title = HTMLEntities.new.encode params[:snippet_title]
   body = HTMLEntities.new.encode params[:snippet_body]
-  if params[:id].nil? || params[:id] == ""
-    @snippet = Snippet.new(:title => title,:body  => body)
-    result = @snippet.save
-  else 
-    @snippet = Snippet.get(params[:id])
-    result = @snippet.update(:title => title, :body => body)
+
+  @error = "Title must be 64 characters or less." if title.length > 64
+  
+  if !@error
+    if params[:id].nil? || params[:id] == ""
+      @snippet = Snippet.new(:title => title,:body  => body)
+      result = @snippet.save
+    else 
+      @snippet = Snippet.get(params[:id])
+      result = @snippet.update(:title => title, :body => body)
+    end
   end
+
   if result
     redirect "/#{@snippet.id}"
   else
