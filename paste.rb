@@ -17,7 +17,7 @@ class Snippet
   include DataMapper::Resource
 
   property :id,         Serial # primary serial key
-  property :title,      String, :required => true, :length => 32
+  property :title,      String, :required => true, :length => 64 
   property :body,       Text,   :required => true
   property :lang,       String, :length => 12
   property :created_at, DateTime
